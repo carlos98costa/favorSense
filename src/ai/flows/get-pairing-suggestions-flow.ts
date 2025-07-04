@@ -47,7 +47,7 @@ Prato do Usuário: "{{{dish}}}"
 *   **Bebidas:** Sugira 2-3 bebidas. Inclua uma mistura de opções como vinho, cerveja ou bebidas não alcoólicas, quando apropriado.
 *   **Sobremesas:** Sugira 1-2 sobremesas que complementariam a refeição.
 *   **Justificativa:** Para CADA sugestão, forneça uma justificativa concisa, mas perspicaz, explicando *por que* é uma boa combinação. Esta é a parte mais importante.
-*   **URL:** Para CADA sugestão, forneça uma URL plausível e representativa para uma receita de um site de receitas conhecido (como tudogostoso.com.br, receiteria.com.br, etc.). A URL deve ser válida.
+*   **URL:** Para CADA sugestão, forneça uma URL válida e funcional para uma receita de um site de receitas conhecido (como tudogostoso.com.br, receiteria.com.br, etc.). A URL deve levar diretamente para a receita.
 
 Retorne APENAS a saída JSON estruturada. Não seja conversacional.`,
 });

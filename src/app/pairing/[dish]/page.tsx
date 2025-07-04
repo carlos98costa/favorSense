@@ -1,11 +1,12 @@
 import { Suspense } from 'react';
-import { notFound } from 'next/navigation';
 import { getPairingSuggestions } from '@/ai/flows/get-pairing-suggestions-flow';
 import type { PairingSuggestionsOutput } from '@/ai/schemas/pairing-suggestions-schema';
 import SuggestionCard from '@/components/suggestion-card';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Utensils, Wine, Salad, CakeSlice } from 'lucide-react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Utensils, Wine, Salad, CakeSlice, AlertTriangle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+
 
 interface PairingResultsPageProps {
   params: {
@@ -14,13 +15,31 @@ interface PairingResultsPageProps {
 }
 
 async function PairingResults({ dishName }: { dishName: string }) {
-  let suggestions: PairingSuggestionsOutput;
+  let suggestions: PairingSuggestionsOutput | null = null;
+  let errorState: string | null = null;
+
   try {
     suggestions = await getPairingSuggestions({ dish: dishName });
+     if (!suggestions) {
+      throw new Error("No suggestions returned from AI.");
+    }
   } catch (error) {
     console.error(error);
-    // Maybe show a specific error component here in the future
-    notFound();
+    errorState = "Não foi possível gerar sugestões para este prato. Tente refinar sua busca ou tente novamente mais tarde.";
+  }
+
+  if (errorState || !suggestions) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Alert variant="destructive" className="max-w-md">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>Erro ao Gerar Sugestões</AlertTitle>
+          <AlertDescription>
+            {errorState || "Ocorreu um erro inesperado."}
+          </AlertDescription>
+        </Alert>
+      </div>
+    );
   }
 
   const { baseDish, accompaniments, proteins, beverages, desserts } = suggestions;
