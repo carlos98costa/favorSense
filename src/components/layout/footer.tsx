@@ -1,0 +1,12 @@
+export function Footer() {
+  const currentYear = new Date().getFullYear();
+  return (
+    <footer className="border-t">
+      <div className="container flex h-16 items-center justify-center">
+        <p className="text-center text-sm text-muted-foreground">
+          &copy; {currentYear} FlavorVerse. Todos os direitos reservados.
+        </p>
+      </div>
+    </footer>
+  );
+}
